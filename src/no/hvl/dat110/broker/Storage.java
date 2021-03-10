@@ -1,11 +1,10 @@
 package no.hvl.dat110.broker;
 
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
-import no.hvl.dat110.common.TODO;
-import no.hvl.dat110.common.Logger;
 import no.hvl.dat110.messagetransport.Connection;
 
 public class Storage {
@@ -51,49 +50,46 @@ public class Storage {
 	}
 
 	public void addClientSession(String user, Connection connection) {
-
-		// TODO: add corresponding client session to the storage
 		
-		throw new UnsupportedOperationException(TODO.method());
+		// Legge til i hashMap med sting(key) og opprette en client-session(value)
 		
+		clients.put(user, new ClientSession(user, connection));
 	}
 
 	public void removeClientSession(String user) {
-
-		// TODO: remove client session for user from the storage
-
-		throw new UnsupportedOperationException(TODO.method());
 		
+		// Lete opp og fjerne en key, value fra hashMap med hjelp av user
+		
+		clients.remove(user);
 	}
 
 	public void createTopic(String topic) {
+		
+		// Legge til en topic (key) i subscriptions med ett tomt sett med brukere(value)
+		
+		subscriptions.put(topic, new HashSet<String>());
 
-		// TODO: create topic in the storage
-
-		throw new UnsupportedOperationException(TODO.method());
-	
 	}
 
 	public void deleteTopic(String topic) {
-
-		// TODO: delete topic from the storage
-
-		throw new UnsupportedOperationException(TODO.method());
+		
+		// Fjerne gitt topic fra subscriptions
+		
+		subscriptions.remove(topic);
 		
 	}
 
 	public void addSubscriber(String user, String topic) {
-
-		// TODO: add the user as subscriber to the topic
 		
-		throw new UnsupportedOperationException(TODO.method());
+		// Legge til en subscriber (user, value) i subscriptions ved hjelp av topic (key)
 		
+		subscriptions.get(topic).add(user);
 	}
 
 	public void removeSubscriber(String user, String topic) {
-
-		// TODO: remove the user as subscriber to the topic
-
-		throw new UnsupportedOperationException(TODO.method());
+		
+		// Fjerne en bruker (value) fra subscriptions ved hjelp av en bruker (key)
+		
+		subscriptions.get(topic).remove(user);
 	}
 }
